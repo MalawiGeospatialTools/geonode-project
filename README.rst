@@ -3,6 +3,14 @@
 
 GeoNode template project. Generates a django project with GeoNode support.
 
+Developer Workshop
+------------------
+
+Available at::
+
+    http://geonode.org/dev-workshop
+
+
 Create a custom project
 -----------------------
 
@@ -118,9 +126,26 @@ You may want to configure your requirements.txt, if you are using additional or 
 Using Ansibe
 ++++++++++++
 
+You will need to use Ansible Role in order to run the playbook.
+
+In order to install and setup Ansible, run the following commands::
+
+    sudo apt-get install software-properties-common
+    sudo apt-add-repository ppa:ansible/ansible
+    sudo apt-get update
+    sudo apt-get install ansible
+
+A sample Ansible Role can be found at https://github.com/GeoNode/ansible-geonode
+
+To install the default one, run::
+
+    sudo ansible-galaxy install GeoNode.geonode
+
+you will find the Ansible files into the ``~/.ansible/roles`` folder. Those must be updated in order to match the GeoNode and GeoServer versions you will need to install.
+
 To run the Ansible playbook use something like this::
 
-    ANSIBLE_ROLES_PATH=~/workspaces/public ansible-playbook -e "gs_root_password=<new gs root password>" -e "gs_admin_password=<new gs admin password>" -e "dj_superuser_password=<new django admin password>" -i inventory --limit all playbook.yml
+    ANSIBLE_ROLES_PATH=~.ansible/roles ansible-playbook -e "gs_root_password=<new gs root password>" -e "gs_admin_password=<new gs admin password>" -e "dj_superuser_password=<new django admin password>" -i inventory --limit all playbook.yml
 
 
 Configuration

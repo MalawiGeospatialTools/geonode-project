@@ -64,3 +64,6 @@ static_root/
 development.db
 development.db-journal
 local_settings.py
+
+# Development
+.idea/

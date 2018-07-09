@@ -1,9 +1,9 @@
 FROM python:2.7.14-stretch
 MAINTAINER GeoNode development team
 
-RUN mkdir -p /usr/src/{{project_name}}
+RUN mkdir -p /usr/src/masdap
 
-WORKDIR /usr/src/{{project_name}}
+WORKDIR /usr/src/masdap
 
 # This section is borrowed from the official Django image but adds GDAL and others
 RUN apt-get update && apt-get install -y \
@@ -41,13 +41,13 @@ RUN GDAL_VERSION=`gdal-config --version` \
 # fix for known bug in system-wide packages
 RUN ln -fs /usr/lib/python2.7/plat-x86_64-linux-gnu/_sysconfigdata*.py /usr/lib/python2.7/
 
-COPY . /usr/src/{{project_name}}
+COPY . /usr/src/masdap
 
-RUN chmod +x /usr/src/{{project_name}}/tasks.py \
-    && chmod +x /usr/src/{{project_name}}/entrypoint.sh
+RUN chmod +x /usr/src/masdap/tasks.py \
+    && chmod +x /usr/src/masdap/entrypoint.sh
 
 # app-specific requirements
 RUN pip install --upgrade --no-cache-dir -r requirements.txt
 RUN pip install --upgrade -e .
 
-ENTRYPOINT ["/usr/src/{{project_name}}/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/masdap/entrypoint.sh"]

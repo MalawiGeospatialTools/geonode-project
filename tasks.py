@@ -44,7 +44,7 @@ http://{public_fqdn}/ >> {override_fn}".format(**envs), pty=True)
 
     try:
         current_allowed = ast.literal_eval(os.getenv('ALLOWED_HOSTS') or \
-                                           "['{public_fqdn}', '{public_host}', 'localhost', 'django', '{{project_name}}',]".format(**envs))
+                                           "['{public_fqdn}', '{public_host}', 'localhost', 'django', 'masdap',]".format(**envs))
     except ValueError:
         current_allowed = []
     current_allowed.extend(['{}'.format(pub_ip), '{}:{}'.format(pub_ip, pub_port)])
@@ -108,7 +108,7 @@ def fixtures(ctx):
 --settings={0}".format(_localsettings()), pty=True)
     ctx.run("django-admin.py loaddata /tmp/default_oauth_apps_docker.json \
 --settings={0}".format(_localsettings()), pty=True)
-    ctx.run("django-admin.py loaddata /usr/src/{{project_name}}/src/geonode/geonode/base/fixtures/initial_data.json \
+    ctx.run("django-admin.py loaddata /usr/src/masdap/src/geonode/geonode/base/fixtures/initial_data.json \
 --settings={0}".format(_localsettings()), pty=True)
     ctx.run("python manage.py set_all_layers_alternate \
 --settings={0}".format(_localsettings()), pty=True)
@@ -179,7 +179,7 @@ def _update_geodb_connstring():
 
 
 def _localsettings():
-    settings = os.getenv('DJANGO_SETTINGS_MODULE', '{{project_name}}.settings')
+    settings = os.getenv('DJANGO_SETTINGS_MODULE', 'masdap.settings')
     return settings
 
 
@@ -195,7 +195,7 @@ def _geonode_public_port():
     if not gn_pub_port:
         gn_pub_port = _container_exposed_port(
             'nginx',
-            os.getenv('GEONODE_INSTANCE_NAME', '{{project_name}}')
+            os.getenv('GEONODE_INSTANCE_NAME', 'masdap')
         )
     return gn_pub_port
 

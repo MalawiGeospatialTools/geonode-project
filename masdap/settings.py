@@ -31,7 +31,7 @@ except ImportError:
 #
 # General Django development settings
 #
-PROJECT_NAME = '{{ project_name }}'
+PROJECT_NAME = 'masdap'
 
 # we need hostname for deployed 
 surl = urlparse(SITEURL)
@@ -41,7 +41,7 @@ hostname = surl.hostname
 if not SITEURL.endswith('/'):
     SITEURL = '{}/'.format(SITEURL)
 
-SITENAME = os.getenv("SITENAME", '{{ project_name }}')
+SITENAME = os.getenv("SITENAME", 'masdap')
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
 # It is used for relative settings elsewhere.
@@ -422,7 +422,7 @@ LOGGING = {
             "handlers": ["console"], "level": "INFO", },
         "pycsw": {
             "handlers": ["console"], "level": "INFO", },
-        "{{ project_name }}": {
+        "masdap": {
             "handlers": ["console"], "level": "DEBUG", },
         },
     }

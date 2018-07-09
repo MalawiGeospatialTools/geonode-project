@@ -23,9 +23,9 @@ import os
 __version__ = (2, 7, 7, 'unstable', 0)
 
 
-default_app_config = "{{project_name}}.apps.AppConfig"
+default_app_config = "masdap.apps.AppConfig"
 
 
 def get_version():
-    import {{project_name}}.version
-    return {{project_name}}.version.get_version(__version__)
+    import masdap.version
+    return masdap.version.get_version(__version__)

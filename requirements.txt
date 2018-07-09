@@ -2,7 +2,7 @@ Django==1.8.19
 six<1.11.0
 
 # GeoNode
--e git://github.com/GeoNode/geonode.git@2.7.x#egg=geonode
+-e git://github.com/MalawiGeospatialTools/geonode.git@2.7.x#egg=geonode
 
 #Celery
 celery>4.0a0c,<=4.1.0

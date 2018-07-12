@@ -171,6 +171,62 @@ services:
        GEOGIG_ENABLED: 'False'
        DOCKER_API_VERSION: "1.24"
 
+  dev:
+    restart: unless-stopped
+    build: .
+    container_name: dev4${COMPOSE_PROJECT_NAME}
+    stdin_open: true
+    # tty: true
+    labels:
+      org.geonode.component: dev
+      org.geonode.instance.name: geonode
+    depends_on:
+      - db
+      # - elasticsearch
+      - rabbitmq
+      - data-dir-conf
+    # command: paver start_django -b 0.0.0.0:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - statics:/mnt/volumes/statics
+      - geoserver-data-dir:/geoserver_data/data
+      - .:/usr/src/masdap_win
+    entrypoint: tail -f /dev/null
+    ports:
+      - 8000:8000
+    environment:
+       DJANGO_SETTINGS_MODULE: masdap.settings
+       GEONODE_INSTANCE_NAME: geonode
+       GEONODE_LB_HOST_IP:
+       GEONODE_LB_PORT:
+       DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
+       DEFAULT_BACKEND_DATASTORE: datastore
+       GEONODE_DATABASE: geonode
+       GEONODE_DATABASE_PASSWORD: geonode
+       GEONODE_GEODATABASE: geonode_data
+       GEONODE_GEODATABASE_PASSWORD: geonode_data
+       ASYNC_SIGNALS: 'False'
+       DOCKER_ENV: production
+       # DOCKER_ENV: development
+       UWSGI_CMD: uwsgi --ini /usr/src/masdap/uwsgi.ini
+       IS_CELERY: 'False'
+       C_FORCE_ROOT: 1
+       SITEURL: http://localhost/
+       # replaced with defaults in settings
+       GEOSERVER_PUBLIC_LOCATION: http://localhost/geoserver/
+       GEOSERVER_LOCATION: http://geoserver:8080/geoserver/
+       OGC_REQUEST_TIMEOUT: 300
+       STATIC_ROOT: /mnt/volumes/statics/static/
+       MEDIA_ROOT: /mnt/volumes/statics/uploaded/
+       GEOIP_PATH: /mnt/volumes/statics/geoip.db
+       ALLOWED_HOSTS: "['*']"
+       ADMIN_EMAILS: ''
+       DEFAULT_BACKEND_UPLOADER: geonode.importer
+       TIME_ENABLED: 'True'
+       MOSAIC_ENABLED: 'False'
+       GEOGIG_ENABLED: 'False'
+       DOCKER_API_VERSION: "1.24"
+
   geonode:
     image: geonode/nginx:geoserver
     restart: unless-stopped
@@ -213,4 +269,3 @@ volumes:
 #    name: ${COMPOSE_PROJECT_NAME}-dbbackups
   statics:
 #    name: ${COMPOSE_PROJECT_NAME}-statics
-

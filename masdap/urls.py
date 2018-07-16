@@ -24,8 +24,8 @@ from django.views.generic import TemplateView
 from geonode.urls import urlpatterns
 
 urlpatterns += (
-## include your urls here
-
+    url(r'^account/signup/', include('account_captcha.urls')),
+    url(r'^contact/', include('contact.urls'))
 )
 
 urlpatterns = patterns('',

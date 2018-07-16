@@ -90,7 +90,7 @@ USE_L10N = strtobool(os.getenv('USE_I18N', 'True'))
 LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', "en")
 
 if PROJECT_NAME not in INSTALLED_APPS:
-    INSTALLED_APPS += (PROJECT_NAME,)
+    INSTALLED_APPS += (PROJECT_NAME, 'contact', 'nocaptcha_recaptcha', 'account_captcha')
 
 # Location of url mappings
 ROOT_URLCONF = os.getenv('ROOT_URLCONF', '{}.urls'.format(PROJECT_NAME))
